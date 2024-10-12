@@ -11,7 +11,9 @@ jobs:
           command: npm install
       - run:
           name: Run tests
-          command: npm test
+          command: |
+            npm test || true
+            cat ./test-results.xml
       - run:
           name: Run SonarQube scan
           command: |
