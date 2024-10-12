@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:18
     steps:
       - checkout
       - run:
@@ -16,11 +16,13 @@ jobs:
             npm test -- --json --outputFile=test-results.json || true
             cat test-results.json
       - run:
+          name: Install SonarQube Scanner
+          command: cd client && npm install sonarqube-scanner
+      - run:
           name: Run SonarQube scan
           command: |
             cd client
-            npm install -g sonarqube-scanner
-            sonar-scanner
+            npx sonar-scanner
 
 workflows:
   version: 2
