@@ -8,15 +8,17 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: npm install
+          command: cd client && npm install
       - run:
           name: Run tests
           command: |
-            npm test || true
-            cat ./test-results.xml
+            cd client
+            npm test -- --json --outputFile=test-results.json || true
+            cat test-results.json
       - run:
           name: Run SonarQube scan
           command: |
+            cd client
             npm install -g sonarqube-scanner
             sonar-scanner
 
