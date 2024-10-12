@@ -32,8 +32,8 @@ jobs:
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@v2.1.0 # Use the latest version from https://github.com/marketplace/actions/official-sonarqube-scan
       env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        SONAR_TOKEN: sqa_add99252cd2cdd3bfe1cbb4404bce75768b32943
+        SONAR_HOST_URL: http://localhost:9000
       with:
         args: >
           -Dsonar.projectKey=secure-payments-portal
