@@ -22,7 +22,11 @@ jobs:
           name: Run SonarQube scan
           command: |
             cd client
-            npx sonar-scanner
+            npx sonar-scanner \
+              -Dsonar.projectKey=secure-payments-portal \
+              -Dsonar.organization=your_organization \
+              -Dsonar.host.url=http://localhost:9000 \
+              -Dsonar.login=sqp_10b43a81e3f2f089a836fbb2ad49e2584d94e4bc
 
 workflows:
   version: 2
