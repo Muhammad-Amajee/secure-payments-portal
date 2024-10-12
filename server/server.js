@@ -33,8 +33,8 @@ app.use('/api', routes);
 
 // Read SSL certificate and key
 const sslOptions = {
-  key: fs.readFileSync(path.resolve(__dirname, '../client/secure-payments-portal-client/localhost.key')),
-  cert: fs.readFileSync(path.resolve(__dirname, '../client/secure-payments-portal-client/localhost.crt')),
+  key: fs.readFileSync(path.resolve(__dirname, '../client/localhost.key')),
+  cert: fs.readFileSync(path.resolve(__dirname, '../client/localhost.crt')),
 };
 
 // Create HTTPS server
