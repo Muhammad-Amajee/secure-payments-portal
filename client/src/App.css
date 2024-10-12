@@ -1,0 +1,175 @@
+/* Center the container */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f2f2f2;
+}
+
+/* Style the card */
+.card {
+  width: 450px;
+  padding: 60px 40px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styling */
+.heading {
+  font-size: 40px;
+  color: #212322;
+  text-align: center;
+  margin-bottom: 16px;
+  font-weight: normal;
+}
+
+/* Links */
+.link-container {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  max-width: 320px;
+  margin: 0 auto 24px;
+}
+
+.link-active {
+  font-size: 24px;
+  color: #212322;
+  padding: 0 20px;
+  text-decoration: underline;
+}
+
+.link-inactive {
+  font-size: 24px;
+  color: #212322;
+  padding: 0 20px;
+}
+
+/* Small text */
+.small-text {
+  text-align: right;
+  font-size: 13px;
+  color: #212322;
+  margin-top: 16px;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.button-styling {
+  width: 360px;
+  height: 66px;
+  margin-top: 32px;
+}
+
+/* App.css */
+
+/* Container holding both left and right sections */
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Left side (Welcome section) */
+.login-left {
+  background-color: #007BFF; /* Blue background */
+  background-image: url('../public/left_bg.jpg');
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* Welcome message styling */
+.welcome-message {
+  text-align: center;
+}
+
+.welcome-text {
+  font-size: 4rem;
+  font-weight: normal;
+}
+
+.welcome-message {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+/* Right side (Login section) */
+.login-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Login form container */
+.login-form-container {
+  width: 80%; /* Occupies 80% width of the right section */
+  max-width: 600px; /* Limits the width for better readability on larger screens */
+}
+
+/* Form field styling */
+.w-full {
+  width: 100%;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.link-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.button-styling {
+  margin-top: 20px;
+}
+
+/* App.css */
+.register-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Left side with background image */
+.register-left {
+  flex: 2;
+  background-image: url('../public/left_bg.jpg'); /* Specify your image path */
+  background-size: cover; /* Ensure the image covers the entire area */
+  background-position: center; /* Center the image */
+  display: flex;
+  align-items: center; /* Vertically center the content */
+  justify-content: center; /* Horizontally center the content */
+  color: white; /* Text color for visibility */
+  text-align: center;
+}
+
+/* Right side with registration form */
+.register-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-form-container {
+  width: 80%; /* Take up 80% width */
+  max-width: 400px; /* Maximum width for responsiveness */
+}
