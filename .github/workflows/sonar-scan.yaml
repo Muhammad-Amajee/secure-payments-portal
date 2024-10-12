@@ -1,0 +1,43 @@
+on:
+  # Trigger analysis when pushing to your main branches, and when creating a pull request.
+  push:
+    branches:
+      - main
+      - develop
+      - 'releases/**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+name: Main Workflow
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # Disabling shallow clones is recommended for improving the relevancy of reporting
+        fetch-depth: 0
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install dependencies
+      run: |
+        cd client
+        npm install
+    - name: Run tests
+      run: |
+        cd client
+        npm test -- --json --outputFile=test-results.json || true
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@v2.1.0 # Use the latest version from https://github.com/marketplace/actions/official-sonarqube-scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+      with:
+        args: >
+          -Dsonar.projectKey=secure-payments-portal
+          -Dsonar.organization=your_organization
+          -Dsonar.sources=.
+          -Dsonar.exclusions=**/node_modules/**,**/build/**,**/coverage/**
+          -Dsonar.javascript.lcov.reportPaths=client/coverage/lcov.info
