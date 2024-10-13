@@ -22,20 +22,20 @@ const Login = ({ setToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const validateForm = () => {
-    const errors = {};
-    if (!validateInput(username, 'username')) {
-      errors.username = 'Username must be 5-20 characters long and alphanumeric with underscores allowed.';
-    }
-    if (!validateInput(password, 'password')) {
-      errors.password = 'Password must be 8-20 characters long and can include special characters.';
-    }
-    if (!validateInput(accountNumber, 'accountNumber')) {
-      errors.accountNumber = 'Account number must be numeric, 8-20 digits.';
-    }
-    setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
+  // const validateForm = () => {
+  //   const errors = {};
+  //   if (!validateInput(username, 'username')) {
+  //     errors.username = 'Username must be 5-20 characters long and alphanumeric with underscores allowed.';
+  //   }
+  //   if (!validateInput(password, 'password')) {
+  //     errors.password = 'Password must be 8-20 characters long and can include special characters.';
+  //   }
+  //   if (!validateInput(accountNumber, 'accountNumber')) {
+  //     errors.accountNumber = 'Account number must be numeric, 8-20 digits.';
+  //   }
+  //   setValidationErrors(errors);
+  //   return Object.keys(errors).length === 0;
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
