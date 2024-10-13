@@ -22,8 +22,7 @@ jobs:
           command: |
             mkdir -p coverage
             cp -r client/coverage .
-      - sonarcloud/scan:
-          quality_gate: false  # Add this line to ignore quality gate status
+      - sonarcloud/scan
 workflows:
   main:
     jobs:
