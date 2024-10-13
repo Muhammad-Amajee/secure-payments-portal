@@ -1,35 +1,24 @@
 version: 2.1
 
+orbs:
+  sonarcloud: sonarsource/sonarcloud@2.0.0
+
 jobs:
   build:
     docker:
-      - image: cimg/node:18.0
+      - image: circleci/node:18.0  # CHANGE ME 1: Choose an appropriate Docker image
     steps:
       - checkout
       - run:
-          name: Install dependencies
-          command: cd client && npm install
-      - run:
-          name: Run tests
+          name: Install dependencies and build project
           command: |
             cd client
-            npm test -- --json --outputFile=test-results.json || true
-            cat test-results.json
-      - run:
-          name: Install SonarQube Scanner
-          command: cd client && npm install sonarqube-scanner
-      - run:
-          name: Run SonarQube scan
-          command: |
-            cd client
-            npx sonar-scanner \
-              -Dsonar.projectKey=secure-payments-portal \
-              -Dsonar.organization=your_organization \
-              -Dsonar.host.url=http://localhost:9000 \
-              -Dsonar.login=sqa_add99252cd2cdd3bfe1cbb4404bce75768b32943
+            npm install
+            npm run build  # CHANGE ME 2: Add the command to install dependencies and build your project
+      - sonarcloud/scan
 
 workflows:
-  version: 2
-  build_and_scan:
+  main:
     jobs:
-      - build
+      - build:
+          context: SonarCloud
