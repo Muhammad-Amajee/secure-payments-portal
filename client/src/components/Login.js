@@ -7,7 +7,7 @@ import '../App.css'; // Assuming this is where the styles are applied
 
 const validateInput = (input, type) => {
   const regex = {
-    username: /^[a-zA-Z0-9_]{5,20}$/, // Username must be alphanumeric with underscores, 5-20 chars
+    username: /^\w{5,20}$/, // Username must be alphanumeric with underscores, 5-20 chars
     password: /^[a-zA-Z0-9!@#$%^&*]{8,20}$/, // Password allows special characters, 8-20 chars
     accountNumber: /^[0-9]{8,20}$/, //Account number must be numeric, 8-20 digits
   };
