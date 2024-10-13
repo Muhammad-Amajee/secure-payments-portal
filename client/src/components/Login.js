@@ -23,16 +23,15 @@ const Login = ({ setToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
     if (!validateInput(username, 'username')) {
       errors.username = validationMessages.username; // Use validation message from constants
     }
-    if (!validateInput(password, 'password')) {
-      errors.password = validationMessages.pwdValidation; // Use validation message from constants
-    }
+    // if (!validateInput(password, 'password')) {
+    //   errors.password = validationMessages.pwdValidation; // Use validation message from constants
+    // }
     setValidationErrors(errors);
 
     if (Object.keys(errors).length > 0) {
@@ -52,6 +51,10 @@ const Login = ({ setToken }) => {
       setCredentialError('Invalid username or password');
       setIsLoading(false);
     }
+  };
+
+  const getPasswordValidationColor = () => {
+    return password.length >= 8 ? 'green' : 'red';
   };
 
   return (
@@ -117,9 +120,12 @@ const Login = ({ setToken }) => {
                 setPassword(e.target.value);
                 setValidationErrors({ ...validationErrors, password: '' });
               }}
-              error={!!validationErrors.password}
+              // error={!!validationErrors.password}
               helperText={validationErrors.password || ''}
             />
+            <p style={{ color: getPasswordValidationColor() }}>
+              Password must be 8-20 characters long and can include special characters.
+            </p>
             {credentialError && (
               <div className="error-message">
                 {credentialError}
