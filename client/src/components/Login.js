@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { loginUser } from '../services/api';
 import { TextField, Box, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import { validationMessages } from '../validationMessages';
 import '../App.css'; // Assuming this is where the styles are applied
 
 const validateInput = (input, type) => {
@@ -22,27 +23,22 @@ const Login = ({ setToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const validateForm = () => {
-    const errors = {};
-    if (!validateInput(username, 'username')) {
-      errors.username = 'Username must be 5-20 characters long and alphanumeric with underscores allowed.';
-    }
-    if (!validateInput(password, 'password')) {
-      errors.password = 'Password must be 8-20 characters long and can include special characters.';
-    }
-    if (!validateInput(accountNumber, 'accountNumber')) {
-      errors.accountNumber = 'Account number must be numeric, 8-20 digits.';
-    }
-    setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
 
   const handleSubmit = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
-    if (!validateForm()) {
-      return; // Do not submit if validation fails
+    const errors = {};
+    if (!validateInput(username, 'username')) {
+      errors.username = validationMessages.username; // Use validation message from constants
     }
+    if (!validateInput(password, 'password')) {
+      errors.password = validationMessages.password; // Use validation message from constants
+    }
+    setValidationErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+    setIsLoading(true);
 
     try {
       const response = await loginUser({ username, password, accountNumber });
@@ -53,7 +49,7 @@ const Login = ({ setToken }) => {
         navigate('/payment'); // Redirect to payment page if customer
       }
     } catch (error) {
-      setCredentialError('Login failed. No token received');
+      setCredentialError('Invalid username or password');
       setIsLoading(false);
     }
   };
