@@ -31,7 +31,7 @@ const Login = ({ setToken }) => {
       errors.username = validationMessages.username; // Use validation message from constants
     }
     if (!validateInput(password, 'password')) {
-      errors.password = validationMessages.passwordString; // Use validation message from constants
+      errors.password = validationMessages.passwordValidation; // Use validation message from constants
     }
     setValidationErrors(errors);
 
