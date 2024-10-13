@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:18.17.0  # Updated to a valid Docker image tag with Node.js 18
     steps:
       - checkout
       - run:
