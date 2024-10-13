@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:18.0  # CHANGE ME 1: Choose an appropriate Docker image
+      - image: circleci/node:18.17.0  # Updated to a valid Docker image tag
     steps:
       - checkout
       - run:
@@ -14,7 +14,7 @@ jobs:
           command: |
             cd client
             npm install
-            npm run build  # CHANGE ME 2: Add the command to install dependencies and build your project
+            npm run build  # Add the command to install dependencies and build your project
       - sonarcloud/scan
 
 workflows:
