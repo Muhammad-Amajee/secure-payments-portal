@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { validationMessages } from '../validationMessages';
 import '../App.css'; // Assuming this is where the styles are applied
 
-const validateInput = (input, type) => {
+export const validateInput = (input, type) => {
   const regex = {
     username: /^\w{5,20}$/, // Username must be alphanumeric with underscores, 5-20 chars
     password: /^[a-zA-Z0-9!@#$%^&*]{8,20}$/, // Password allows special characters, 8-20 chars

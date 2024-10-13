@@ -1,8 +1,6 @@
 version: 2.1
-
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
-
 jobs:
   build:
     docker:
@@ -10,13 +8,21 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependencies and build project
+          name: Install dependencies
           command: |
             cd client
             npm install
-            npm run build  # Add the command to install dependencies and build your project
+      - run:
+          name: Run tests and generate coverage
+          command: |
+            cd client
+            npm test -- --coverage
+      - run:
+          name: Save coverage report
+          command: |
+            mkdir -p coverage
+            cp -r client/coverage .
       - sonarcloud/scan
-
 workflows:
   main:
     jobs:
