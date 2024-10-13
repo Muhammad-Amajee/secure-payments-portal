@@ -1,43 +1,27 @@
+name: Build
+
 on:
-  # Trigger analysis when pushing to your main branches, and when creating a pull request.
   push:
     branches:
       - main
-      - develop
-      - 'releases/**'
-  pull_request:
-    types: [opened, synchronize, reopened]
 
-name: Main Workflow
+
 jobs:
-  sonarqube:
+  build:
+    name: Build and analyze
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v4
-      with:
-        # Disabling shallow clones is recommended for improving the relevancy of reporting
-        fetch-depth: 0
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-    - name: Install dependencies
-      run: |
-        cd client
-        npm install
-    - name: Run tests
-      run: |
-        cd client
-        npm test -- --json --outputFile=test-results.json || true
-    - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@v2.1.0 # Use the latest version from https://github.com/marketplace/actions/official-sonarqube-scan
-      env:
-        SONAR_TOKEN: sqa_add99252cd2cdd3bfe1cbb4404bce75768b32943
-        SONAR_HOST_URL: http://localhost:9000
-      with:
-        args: >
-          -Dsonar.projectKey=secure-payments-portal
-          -Dsonar.organization=your_organization
-          -Dsonar.sources=.
-          -Dsonar.exclusions=**/node_modules/**,**/build/**,**/coverage/**
-          -Dsonar.javascript.lcov.reportPaths=client/coverage/lcov.info
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: sonarsource/sonarqube-scan-action@v3
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
