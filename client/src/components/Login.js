@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { loginUser } from '../services/api';
+import PropTypes from 'prop-types';
 import { TextField, Box, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { validationMessages } from '../validationMessages';
@@ -9,7 +10,7 @@ const validateInput = (input, type) => {
   const regex = {
     username: /^\w{5,20}$/, // Username must be alphanumeric with underscores, 5-20 chars
     password: /^[a-zA-Z0-9!@#$%^&*]{8,20}$/, // Password allows special characters, 8-20 chars
-    accountNumber: /^[0-9]{8,20}$/, //Account number must be numeric, 8-20 digits
+    accountNumber: /^\d{8,20}$/, //Account number must be numeric, 8-20 digits
   };
   return regex[type]?.test(input) || false;
 };
@@ -139,6 +140,11 @@ const Login = ({ setToken }) => {
       </div>
     </div>
   );
+};
+
+// Add prop types validation
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired,
 };
 
 export default Login;
