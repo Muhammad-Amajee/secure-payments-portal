@@ -5,11 +5,11 @@ const User = require('../models/User');
 const router = express.Router();
 
 // Define RegEx patterns for validation
-const usernamePattern = /^[a-zA-Z0-9_]{5,20}$/;
+const usernamePattern = /^\w{5,20}$/;
 const passwordPattern = /^[a-zA-Z0-9!@#$%^&*]{8,20}$/;
-const accountNumberPattern = /^[0-9]{8,20}$/;
+const accountNumberPattern = /^\d{8,20}$/;
 const namePattern = /^[a-zA-Z\s]{1,50}$/;
-const idNumberPattern = /^[a-zA-Z0-9]{1,20}$/;
+const idNumberPattern = /^[a-zA-Z\d]{1,20}$/;
 const rolePattern = /^(employee|customer)$/;
 
 router.post('/register', async (req, res) => {

@@ -8,8 +8,8 @@ const router = express.Router();
 const authenticate = require('../middleware/auth');
 
 // Define RegEx patterns for validation
-const payeeAccountPattern = /^[0-9]{8,20}$/;
-const amountPattern = /^[0-9]+(\.[0-9]{1,2})?$/;
+const payeeAccountPattern = /^\d{8,20}$/;
+const amountPattern = /^\d+(\.\d{1,2})?$/;
 const currencyPattern = /^[A-Z]{3}$/;
 const swiftCodePattern = /^[A-Z0-9]{8,11}$/;
 
@@ -32,13 +32,13 @@ router.post('/payments', authenticate, async (req, res) => {
   }
 
   try {
-    // Check if the payee account exists
-    const sanitizedPayeeAccount = payeeAccount.replace(/[^0-9]/g, '');
+    // // Check if the payee account exists
+    // const sanitizedPayeeAccount = payeeAccount.replace(/[^0-9]/g, '');
 
-    // Check if the payee account exists
-    const payee = await User.findOne({ accountNumber: sanitizedPayeeAccount });    if (!payee) {
-      return res.status(404).send('Payee account not found');
-    }
+    // // Check if the payee account exists
+    // const payee = await User.findOne({ accountNumber: sanitizedPayeeAccount });    if (!payee) {
+    //   return res.status(404).send('Payee account not found');
+    // }
     
     const newPayment = new Payment({ payer, payeeAccount, amount, currency, swiftCode });
     await newPayment.save();
