@@ -33,8 +33,10 @@ router.post('/payments', authenticate, async (req, res) => {
 
   try {
     // Check if the payee account exists
-    const payee = await User.findOne({ accountNumber: payeeAccount });
-    if (!payee) {
+    const sanitizedPayeeAccount = payeeAccount.replace(/[^0-9]/g, '');
+
+    // Check if the payee account exists
+    const payee = await User.findOne({ accountNumber: sanitizedPayeeAccount });    if (!payee) {
       return res.status(404).send('Payee account not found');
     }
     
