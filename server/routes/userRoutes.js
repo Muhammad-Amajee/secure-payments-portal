@@ -4,17 +4,49 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 
+// Define RegEx patterns for validation
+const usernamePattern = /^[a-zA-Z0-9_]{5,20}$/;
+const passwordPattern = /^[a-zA-Z0-9!@#$%^&*]{8,20}$/;
+const accountNumberPattern = /^[0-9]{8,20}$/;
+const namePattern = /^[a-zA-Z\s]{1,50}$/;
+const idNumberPattern = /^[a-zA-Z0-9]{1,20}$/;
+const rolePattern = /^(employee|customer)$/;
+
 router.post('/register', async (req, res) => {
-  const { username, password, accountNumber, name, idNumber } = req.body;
+  const { username, password, accountNumber, name, idNumber, role } = req.body;
 
   // Log received data for debugging
   console.log(req.body);
 
-  if (!username || !password || !accountNumber || !name || !idNumber) {
-    return res.status(400).send('All fields are required');
+  // Validate input using RegEx patterns
+  if (!usernamePattern.test(username)) {
+    return res.status(400).send('Invalid username');
+  }
+  if (!passwordPattern.test(password)) {
+    return res.status(400).send('Invalid password');
+  }
+  if (!accountNumberPattern.test(accountNumber)) {
+    return res.status(400).send('Invalid account number');
+  }
+  if (!namePattern.test(name)) {
+    return res.status(400).send('Invalid name');
+  }
+  if (!idNumberPattern.test(idNumber)) {
+    return res.status(400).send('Invalid ID number');
+  }
+  if (role && !rolePattern.test(role)) {
+    return res.status(400).send('Invalid role');
   }
 
-  const user = new User({ username, password, accountNumber, name, idNumber });
+  // Create user data object
+  const userData = { username, password, accountNumber, name, idNumber };
+
+  // Include role if it is "employee"
+  if (role === 'employee') {
+    userData.role = role;
+  }
+
+  const user = new User(userData);
   try {
     await user.save();
     res.status(201).send('User registered');
@@ -25,6 +57,17 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   const { username, password, accountNumber } = req.body;
+
+  // Validate input using RegEx patterns
+  if (!usernamePattern.test(username)) {
+    return res.status(400).send('Invalid username');
+  }
+  if (!passwordPattern.test(password)) {
+    return res.status(400).send('Invalid password');
+  }
+  if (!accountNumberPattern.test(accountNumber)) {
+    return res.status(400).send('Invalid account number');
+  }
 
   try {
     const user = await User.findOne({ username });
@@ -42,7 +85,7 @@ router.post('/login', async (req, res) => {
       sameSite: 'strict',
     });
 
-    res.send({ message: 'Login successful', role: user.role }); // Include role in the response
+    res.send({ message: 'Login successful', role: user.role, name: user.name }); // Include role in the response
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).send('Server error');

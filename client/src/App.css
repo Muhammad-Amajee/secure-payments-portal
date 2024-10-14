@@ -173,3 +173,30 @@
   width: 80%; /* Take up 80% width */
   max-width: 400px; /* Maximum width for responsiveness */
 }
+
+.paymentsTable {
+  padding: 32px;
+}
+
+.staffPortal {
+  width: 100%;
+  min-height: 80vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 32px;
+  font-size: 32px;
+}
+
+.employeeName {
+  font-size: 32px;
+  margin-right: 32px;
+  color: #333;
+}
+
+.employeeName span {
+  font-weight: bold;
+}

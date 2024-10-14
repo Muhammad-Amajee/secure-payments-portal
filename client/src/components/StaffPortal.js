@@ -1,51 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { useEffect, useState } from 'react';
+import PaymentsTable from './PaymentsTable';
+import '../App.css';
 
 const StaffPortal = () => {
-  const [payments, setPayments] = useState([]);
+  const [employeeName, setEmployeeName] = useState('');
 
   useEffect(() => {
-    const fetchPayments = async () => {
-      try {
-        const response = await axios.get('https://localhost:5000/api/payments', { withCredentials: true });
-        setPayments(response.data);
-      } catch (error) {
-        console.error('Error fetching payments:', error);
-      }
-    };
-
-    fetchPayments();
+    const name = localStorage.getItem('employeeName');
+    setEmployeeName(name);
   }, []);
-
   return (
-    <div>
-      <h1>Staff Portal - Payment Details</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Payer Name</th>
-            {/* <th>Payer Account Number</th> */}
-            <th>Payee Account</th>
-            <th>Amount</th>
-            <th>Currency</th>
-            <th>SWIFT Code</th>
-            <th>Created At</th>
-          </tr>
-        </thead>
-        <tbody>
-          {payments.map(payment => (
-            <tr key={payment._id}>
-              <td>{payment.payer.name}</td>
-              {/* <td>{payment.payer.accountNumber}</td> */}
-              <td>{payment.payeeAccount}</td>
-              <td>{payment.amount}</td>
-              <td>{payment.currency}</td>
-              <td>{payment.swiftCode}</td>
-              <td>{new Date(payment.createdAt).toLocaleString()}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className='staffPortal'>
+      <div className='header'>
+        <h1>Staff Portal</h1>
+        <div className='employeeName'>
+          Welcome, <span>{employeeName}</span>
+        </div>
+      </div>
+      <div className='paymentsTable'>
+        <PaymentsTable />
+      </div>
     </div>
   );
 };

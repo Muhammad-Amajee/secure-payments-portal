@@ -65,7 +65,7 @@ const Payment = ({ token }) => {
       setPaymentData({ payeeAccount: '', amount: '', currency: '', swiftCode: '' }); // Reset form
     } catch (error) {
       console.error('Payment error:', error);
-      setError('Payment failed. Please try again.'); // Show error message
+      setError('Failed to make payment. Please check the payee account and try again.');
     }
   };
 

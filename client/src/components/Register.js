@@ -1,8 +1,8 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import { registerUser } from '../services/api'; // Import your API service function
-import { TextField, Box, Button } from '@mui/material'; 
+import { TextField, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import '../App.css'; // Import CSS for styling
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const validateInput = (input, type) => {
   const regex = {
@@ -21,14 +21,17 @@ const Register = () => {
     password: '',
     accountNumber: '',
     name: '',
-    idNumber: ''
+    idNumber: '',
+    role: 'customer',
   });
 
   const [validationErrors, setValidationErrors] = useState({});
+  const [open, setOpen] = useState(false); // State to control the dialog
+  const navigate = useNavigate(); // Hook to navigate programmatically
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setValidationErrors({ ...validationErrors, [e.target.name]: '' }); 
+    setValidationErrors({ ...validationErrors, [e.target.name]: '' });
   };
 
   const validateForm = () => {
@@ -59,9 +62,15 @@ const Register = () => {
     try {
       const response = await registerUser(formData);
       console.log('User registered:', response);
+      setOpen(true); // Open the dialog on successful registration
     } catch (error) {
       console.error('Registration error:', error);
     }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/login'); // Redirect to login page
   };
 
   return (
@@ -69,7 +78,7 @@ const Register = () => {
       {/* Left Section with background image */}
       <div className="register-left">
         <div className="">
-        <h1 className='welcome-text'>Ready to take the next step? <span className='welcome-message'>Create your account now!</span></h1>
+          <h1 className='welcome-text'>Ready to take the next step? <span className='welcome-message'>Create your account now!</span></h1>
         </div>
       </div>
 
@@ -98,7 +107,7 @@ const Register = () => {
               name="username"
               onChange={handleChange}
               required
-              error={!!validationErrors.username} 
+              error={!!validationErrors.username}
               helperText={validationErrors.username}
             />
             <TextField
@@ -110,7 +119,7 @@ const Register = () => {
               name="password"
               onChange={handleChange}
               required
-              error={!!validationErrors.password} 
+              error={!!validationErrors.password}
               helperText={validationErrors.password}
             />
             <TextField
@@ -121,7 +130,7 @@ const Register = () => {
               name="accountNumber"
               onChange={handleChange}
               required
-              error={!!validationErrors.accountNumber} 
+              error={!!validationErrors.accountNumber}
               helperText={validationErrors.accountNumber}
             />
             <TextField
@@ -132,7 +141,7 @@ const Register = () => {
               name="name"
               onChange={handleChange}
               required
-              error={!!validationErrors.name} 
+              error={!!validationErrors.name}
               helperText={validationErrors.name}
             />
             <TextField
@@ -143,7 +152,7 @@ const Register = () => {
               name="idNumber"
               onChange={handleChange}
               required
-              error={!!validationErrors.idNumber} 
+              error={!!validationErrors.idNumber}
               helperText={validationErrors.idNumber}
             />
             <Button
@@ -159,6 +168,21 @@ const Register = () => {
           </Box>
         </div>
       </div>
+
+      {/* Success Dialog */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Registration Successful</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            You have successfully registered. Click the button below to go to the login page.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Go to Login
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { TextField, Box, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { validationMessages } from '../validationMessages';
-import '../App.css'; // Assuming this is where the styles are applied
+import '../App.css';
 
 export const validateInput = (input, type) => {
   const regex = {
@@ -44,6 +44,8 @@ const Login = ({ setToken }) => {
       const response = await loginUser({ username, password, accountNumber });
       setToken(true);
       if (response.role === 'employee') {
+        console.log(response);
+        localStorage.setItem('employeeName', response.name);
         navigate('/staff-portal'); // Redirect to staff portal if employee
       } else {
         navigate('/payment'); // Redirect to payment page if customer
