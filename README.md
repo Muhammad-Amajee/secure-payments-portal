@@ -4,7 +4,7 @@ Surname: Amajee
 
 Student Number: ST10117234
 
-GitHub Repo Link: 
+GitHub Repo Link: https://github.com/Muhammad-Amajee/secure-payments-portal
 
 Youtube Video Link: 
 
